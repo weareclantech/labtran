@@ -1,0 +1,89 @@
+# Liste de toutes les const utilisées en LABTRAN ainsi que leur format
+
+# 1. Effectifs
+
+# liste des salariés en CDI au sein de l'entreprise
+# format - par employé : start_date, end_date
+  const_permanent_contracts
+
+# liste des salariés en CDD au sein de l’entreprise
+# format - par employé : start_date, end_date
+  const_fixed_term_contracts
+
+# liste des salariés à temps partiel au sein de l’entreprise
+# format - par employé : start_date, end_date, working_time (heures par semaine)
+  const_part_time_contracts
+
+# liste des salariés mis à la disposition par une entreprise extérieure, présents dans les locaux de l’entreprise utilisatrice
+# format - par employé : start_date, end_date
+  const_external_employees
+
+# L'entreprise est-elle une entreprise de travail temporaire
+# format - boolean : true / false
+  const_is_temporary_work_entreprise?
+
+# UNIQUEMENT entreprise de travail temporaire - liste des salariés temporaires liés à l'entreprise par des contrats de mission
+# format - par employé : start_date, end_date
+  const_employees_sent_as_fixed_term_contracts
+
+# durée conventionnelle du travail au sein de l'entreprise
+# format - nombre (heures par semaine)
+  const_entreprise_working_time
+
+# 2. Calendrier
+
+# est-ce que la société a mis en place une Délégation du personnel ?
+# format - boolean : true / false
+  has_dp?
+
+# est-ce que la société a mis en place un Comité d'entreprise ?
+# format - boolean : true / false
+  has_ce?
+
+# est-ce que la société a mis en place un Comité d'hygiène de sécurité et des conditions de travail ?
+# format - boolean : true / false
+  has_chsct?
+
+# date de fin de mandat de la Délégation du personnel
+# format - date
+  dp_mandate_end
+
+# date de fin de mandat du Comité d'entreprise
+# format - date
+  ce_mandate_end
+
+# date de fin de mandat du Comité d'hygiène de sécurité et des conditions de travail
+# format - date
+  chsct_mandate_end
+
+# date envisagée pour la tenue du premier tour des élections
+# format - date
+  const_first_election_round_date in var_first_election_round_date_range
+
+# date envisagée pour la tenue du premier tour des élections
+# format - date
+  const_second_election_round_date in var_second_election_round_date_range
+
+# date d'envoi de la notice d'information aux salariés
+# format - date
+  const_employee_information_date > var_min_employee_information_date
+
+# date d'envoi de l'invitation à négocier aux organisations syndicales
+# format - date
+  const_union_invitation_date < var_max_union_information_date
+
+# date d'ouverture des listes électorales
+# format - date
+  const_electoral_list_opening_date > var_min_electoral_list_opening_date
+
+# date de fermeture des listes électorales
+# format - date
+  const_electoral_list_closure_date < var_max_electoral_list_closure_date
+
+# le second tour a-t'il lieu ?
+# format - boolean : true / false
+  election_has_two_rounds?
+
+
+
+

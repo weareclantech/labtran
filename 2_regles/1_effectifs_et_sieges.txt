@@ -1,0 +1,70 @@
+# Liste des rule portant sur le calcul des effectifs à prendre en compte dans le calcul des
+# sièges du CSE à pourvoir et calcul du nombre de sièges à pourvoir
+
+rule 2.1.1
+  # articles L2311-2, L1111-2, L1251-54
+  # calcul du nombre de contrats permanents à prendre en compte dans le calcul des sièges du CSE
+  for each |month| in [regl_representativity_period] do :
+    var_nb_permanent_contracts_per_month[month] = Count of |const_permanent_contracts| where (start_date <= month)
+
+
+rule 2.1.2
+  # articles L2311-2, L1111-2, L1251-54
+  # calcul du nombre de contrats temporaires (CDD et salariés temporaires) à prendre en compte dans le calcul des sièges du CSE
+  for each |month| in [regl_representativity_period] do :
+    var_nb_fixed_term_contracts_per_month[month] = Count of |const_fixed_term_contracts| where (start_date <= month)
+
+
+rule 2.1.3
+  # articles L2311-2, L1111-2, L1251-54
+  # calcul du nombre de contrats à temps partiel à prendre en compte dans le calcul des sièges du CSE
+  for each |month| in [regl_representativity_period] do :
+    var_nb_part_time_contracts_per_month[month] = Count of (working_time / const_entreprise_working_time) per |const_part_time_contracts| where (start_date <= month)
+
+
+rule 2.1.4
+  # articles L2311-2, L1111-2, L1251-54
+  # calcul du nombre de salariés mis à la disposition par une entreprise extérieure à prendre en compte dans le calcul des sièges du CSE
+  for each |month| in [regl_representativity_period] do :
+    var_nb_external_employees_per_month[month] = Count of |const_external_employees| where (start_date <= month - 1.year)
+
+rule 2.1.5
+  # articles L2311-2, L1111-2, L1251-54
+  # calcul du nombre de salariés temporaires liés à l'entreprise par des contrats de mission
+  if const_is_temporary_work_entreprise? = true
+    for each |month| in [regl_representativity_period] do :
+      var_nb_employees_sent_as_fixed_term_contracts_per_month[month] = Count of |const_employees_sent_as_fixed_term_contracts| where (start_date <= month - 3.months)
+
+rule 2.1.6
+  # articles L2311-2
+  # calcul du nombre d'employés à prendre en compte dans le calcul du nombre de siège du CSE à pourvoir par mois
+  for each |month| in [regl_representativity_period] do :
+    var_nb_total_employees_per_month[month] = var_nb_permanent_contracts_per_month[month]  +
+                                              var_nb_fixed_term_contracts_per_month[month] +
+                                              var_nb_part_time_contracts_per_month[month]  +
+                                              var_nb_external_employees_per_month[month]   +
+                                              var_nb_employees_sent_as_fixed_term_contracts_per_month[month]
+
+rule 2.1.7
+  # articles n/a
+  # calcul qui détermine le nombre minimum d'employés de l'entreprise sur la période de représentativité
+  var_min_number_of_total_employees = Minimum of var_nb_total_employees_per_month
+
+rule 2.1.8
+  # articles L2311-2
+  # calcul qui détermine si l'entreprise à besoin de mettre en place un CSE ou non en fonction de l'effectif
+  if (var_min_number_of_total_employees >= regl_minimum_employee_number_for_cse) do :
+    var_is_cse_required? = true
+  else
+    var_is_cse_required? = false
+
+rule 2.1.9
+  # articles L2311-2
+  # calcul qui détermine le nombre de membres titulaires nécessaires à pourvoir en fonction de l'effectif
+  if (var_is_cse_required?) = true do :
+    var_min_nb_incumbents_cse = regl_min_cse_seats_per_company_size[var_min_number_of_total_employees]
+
+rule 2.1.10
+  # articles L2311-2
+  # calcul qui détermine le nombre de membres suppléants à désigner en fonction de l'effectif
+  var_min_nb_deputies_cse = var_min_nb_incumbents_cse

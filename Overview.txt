@@ -1,0 +1,26 @@
+Objectifs
+- Le LABTRAN traduit le Code du travail dans une syntaxe logique
+- Le LABTRAN est à la fois compréhensible par un juriste et suffisamment proche d'un langage programmatique pour être adaptable par un développeur
+- Le LABTRAN est flexible pour pouvoir facilement intégrer les changements du code du travail
+- Le LABTRAN permet de facilement retracer quelle fonction programmatique s'appuie sur quelle règle du code du travail
+- Le LABTRAN est DRY pour éviter les répétitions
+
+Périmètre d'utilisation
+- Election du CSE
+- Gestion des opérations du CSE au quotidien (budget, compta, réunion, PV)
+- Gestion des montants et exonérations des avantages salariés
+
+Variables
+- regl : Variables générales indépendantes de l'entreprise définies par les textes de loi
+- const : Variables propres à l'entreprise dont les valeurs sont fournies par les dirigeants (ex. liste de salariés). Ces variables peuvent êrte contraintes par un ensemble de var (ex. date des élections)
+- var : Variables propres à l'entreprise dont les valeurs sont calculées au moyen de rules, regl et const (ex. nombre de contrats permanents à prendre en compte pour le calcul des effectifs pour les élections)
+
+Regles
+- rule : Brique règlementaire logique (peut être le pendant d'un article de loi ou une fraction d'article), qui a pour objectif de définir une unique valeur (d'une regl ou d'une var). Les valeurs des regl et var ne sont calculées qu'une unique fois et ce au moyen d'une unique rule. Une rule peut regrouper plusieurs rule, notamment dans le cas de calculs d'aggrégats
+
+Nomenclature
+- const et var :
+-- type : boolean => has/is_XXX_?, liste => pluriel, date => _date, aggrégat => nb_XXX, table => xxx(pluriel)_per_yyy
+-- nom : descriptif, pas de verbe (sauf pour boolean)
+- rule : verb_var (ex. calcul_nb_permanent_contract) et contient un index
+- function : verb_var

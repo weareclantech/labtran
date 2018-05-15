@@ -1,0 +1,114 @@
+# Liste de toutes les regl utilisées en LABTRAN et des rule qui en définissent les valeurs
+
+# 1. Effectifs et sièges
+
+rule 1.1.1
+  # articles L2311-2
+  # période minimum en mois pendant laquelle une entreprise doit avoir atteint un palier d'effectif pour que les règles en matière de sièges du CSE à pourvoir s'appliquent
+  regl_representativity_period = 12.months
+
+rule 1.1.2
+  # articles L2311-2, R2314-1
+  # liste qui donne nombre minimum de membres titulaires du CSE à désigner en fonction du nombre d'employés dans l'entreprise
+  regl_min_cse_seats_per_company_size = {
+    11:1,
+    25:2,
+    50:4,
+    75:5,
+    100:6,
+    125:7,
+    150:8,
+    175:9,
+    200:10,
+    250:11,
+    400:12,
+    500:13,
+    600:14,
+    800:15,
+    900:16,
+    1000:17,
+    1250:18,
+    1500:19,
+    1750:20,
+    2000:21,
+    2250:22,
+    2500:23,
+    3000:24,
+    3500:25,
+    4250:26,
+    4750:27,
+    5000:28,
+    5750:29,
+    6000:31,
+    7000:32,
+    8250:33,
+    9000:34,
+    10000:35
+  }
+
+rule 1.1.3
+  # articles L2311-2
+  # nombre minimum d'effectif que doit avoir l'entreprise sur la durée représentative pour que des élections du CSE soit nécessaire
+  regl_minimum_employee_number_for_cse = 11
+
+# 2. Calendrier
+
+rule 2.1.1
+  # articles TBD
+  # date butoire à laquelle les entreprises concernées devront avoir mener des élections du CSE
+  regl_cse_election_deadline = 01/01/2020
+
+rule 2.1.2
+  # articles L2314-5
+  # délais minimum entre le début du processus d'élection et la date de tenue du premier tour
+  regl_max_delay_to_irp_mandate_end_date = 15.days
+
+rule 2.1.3
+  # articles L2314-4
+  # délais minimum entre le début du processus d'élection et la date de tenue du premier tour
+  regl_max_delay_to_first_election_round = 90.days
+
+rule 2.1.4
+  # articles L2314-29
+  # délais maximum que doit respecter l'entreprise entre le premier et le second tour
+  regl_max_delay_to_second_election_round = 15.days
+
+rule 2.1.5
+  # articles L2314-5
+  # délais minimum entre l'envoi de l'invitation à négocier envoyée aux organisations syndicales et la date envisagée du premier tour dans le cas d'un renouvellement des IRP
+  regl_min_delay_to_union_information_when_irp = 2.months
+
+rule 2.1.6
+  # articles BEST_PRACTICE
+  # délais minimum entre le début du processus d'élection et la date de tenue du premier tour en l'absence d'IRP en place
+  regl_min_delay_to_union_information_when_no_irp = 1.month
+
+rule 2.1.7
+  # articles L2314-5
+  # délais après lequel l'entreprise n'est plus tenue d'inviter les organisations syndicales dans le cas où aucun employé ne s'est encore porté candidat
+  regl_min_delay_to_union_invitation_exemption = 30.days
+
+rule 2.1.8
+  # articles L2314-5
+  # délais minimum que doit respecter l'entreprise entre l'envoi des invitations aux organisations syndicales et la tenue du premier tour de négociation pré-électoral
+  regl_min_delay_to_first_negotiation_round = 15.days
+
+rule 2.1.9
+  # articles BEST_PRACTICE
+  # délais minimum conseillé à l'entreprise entre l'envoi de la notice d'information aux salariés et l'ouverture des candidatures
+  regl_min_electoral_list_opening_delay = 1.day
+
+rule 2.1.10
+  # articles BEST_PRACTICE
+  # délais minimum conseillé à l'entreprise entre la clôture des listes électorales et la tenue du premier tour des élections
+  regl_min_electoral_list_closure_delay = 10.days
+
+rule 2.1.11
+  # articles BEST_PRACTICE
+  # délais minimum conseillé à l'entreprise entre l'affichage des listes électorales et la tenue du premier tour des élections
+  regl_min_electoral_list_presentation_delay = 4.days
+
+rule 2.1.12
+  # articles TBD
+  # délais maximum pour que l'entreprise transmette le PV d'élection rempli à l'inspecteur du travail, au centre de traitement des élections professionnelles et aux organisations syndicales ayant participé au négociations suite à la tenue du dernier tour des élections
+  regl_max_election_result_information_delay = 15.days

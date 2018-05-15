@@ -1,0 +1,85 @@
+# Liste des rule portant sur le calcul du calendrier des élections du cse
+
+rule 2.2.1
+  # articles n/a
+  # choix des règles à appliquer en fonction des instances existantes
+  var_has_irp? = has_dp? || has_ce? || has_chsct? = true
+
+rule 2.2.2
+  # articles n/a
+  # première date de fin de mandat des IRPs en place
+  if (var_has_irp? = true) do :
+    var_min_mandate_end_date = Minimum of [dp_mandate_end, ce_mandate_end, chsct_mandate_end]
+
+rule 2.2.3
+  # articles L2314-5, L2314-4
+  # période pendant laquelle le 1er tour des élections doit avoir lieu
+  if (var_has_irp? = true) do :
+    if (var_min_mandate_end_date < regl_cse_election_deadline) do :
+      var_first_election_round_date_range = [var_min_mandate_end_date - regl_max_delay_to_irp_mandate_end_date .. var_min_mandate_end_date]
+    else do :
+      var_first_election_round_date_range = [today + regl_max_delay_to_first_election_round .. regl_cse_election_deadline - 1.day]
+  else do :
+    var_first_election_round_date_range = [today + regl_max_delay_to_first_election_round .. n.a]
+
+rule 2.2.4
+  # articles L2314-5, L2314-4
+  # période pendant laquelle le 2nd tour des élections doit avoir lieu le cas échéant
+  if (var_has_irp? = true) do :
+    var_second_election_round_date_range = [const_first_round_date .. var_min_mandate_end_date]
+  else do :
+    var_second_election_round_date_range = [const_first_round_date .. const_first_round_date + regl_max_delay_to_second_election_round]
+
+rule 2.2.5
+  # articles L2314-4
+  # date minimale à laquelle les employés doivent être informés de la tenue du premier tour des élections
+  var_min_employee_information_date = const_first_round_date - regl_max_delay_to_first_round
+
+rule 2.2.6
+  # articles L2314-5
+  # date minimale à laquelle les employés doivent être informés de la tenue du premier tour des élections
+  if (var_has_irp? = true) do :
+    var_max_union_information_date = const_first_election_round_date - regl_min_delay_to_union_information_when_irp
+  else do :
+    var_max_union_information_date = const_first_election_round_date - regl_min_delay_to_union_information_when_no_irp
+
+rule 2.2.7
+  # articles L2314-5
+  # date après laquelle l'entreprise n'est plus tenue d'inviter les organisations syndicales lorsqu'aucun employé ne s'est porté candidat
+  if (const_employee_information_date <= var_max_union_information_date - regl_min_delay_to_union_invitation_exemption) do :
+    var_union_invitation_exemption_date = const_employee_information_date + regl_min_delay_to_union_invitation_exemption
+
+rule 2.2.8
+  # articles L2314-5
+  # date minimum à laquelle la première négociation pré-électorale doit avoir lieu
+  var_min_first_negotiation_round_date = const_union_invitation_date + regl_min_delay_to_first_negotiation_round
+
+rule 2.2.9
+  # articles BEST_PRACTICE
+  # date minimale par défault à laquelle l'entreprise doit ouvrir les listes électorales
+  var_min_electoral_list_opening_date = const_employee_information_date + regl_min_electoral_list_opening_delay
+
+rule 2.2.10
+  # articles BEST_PRACTICE
+  # date maximale par défault à laquelle les listes électorales sont clôturées
+  var_max_electoral_list_closure_date = const_first_election_round_date - regl_min_electoral_list_closure_delay
+
+rule 2.2.11
+  # articles BEST_PRACTICE
+  # date maximale par défault à laquelle l'entreprise doit afficher les listes électorales
+  var_max_electoral_list_presentation_date = Maximum of [const_first_election_round_date - regl_min_electoral_list_presentation_delay .. var_max_electoral_list_closure_date]
+
+rule 2.2.12
+  # articles BEST_PRACTICE
+  # date maximale avant laquelle l'entreprise doit envoyer le PV d'élection rempli à l'inspecteur du travail, au centre de traitement des élections professionnelles et aux organisations syndicales ayant participé au négociations
+  if (election_has_two_rounds? = false) do :
+    var_max_election_result_information_date = const_first_election_round_date + regl_max_election_result_information_delay
+  else do :
+    var_max_election_result_information_date = const_second_election_round_date + regl_max_election_result_information_delay
+
+
+
+
+
+
+
